@@ -31,6 +31,18 @@ X_train, X_test, y_train, y_test = train_test_split(
 # 🔴 EXPERIMENT-SPECIFIC CODE HERE
 # ===============================
 
+from sklearn.linear_model import Ridge
+
+EXP_ID = "EXP-01"
+MODEL_NAME = "Ridge Regression (alpha=1.0)"
+
+scaler = StandardScaler()
+X_train_proc = scaler.fit_transform(X_train)
+X_test_proc = scaler.transform(X_test)
+
+model = Ridge(alpha=1.0)
+
+
 # ---------------- TRAIN ----------------
 model.fit(X_train_proc, y_train)
 
