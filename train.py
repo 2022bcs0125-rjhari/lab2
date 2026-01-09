@@ -33,14 +33,24 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 from sklearn.linear_model import Ridge
 
-EXP_ID = "EXP-01"
-MODEL_NAME = "Ridge Regression (alpha=1.0)"
+EXP_ID = "EXP-02"
+MODEL_NAME = "Ridge Regression (alpha=10, corr-FS)"
+
+corr = data.corr()["quality"].abs()
+selected = corr[corr > 0.15].index.drop("quality")
+
+X_fs = data[selected]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X_fs, y, test_size=0.2, random_state=42
+)
 
 scaler = StandardScaler()
 X_train_proc = scaler.fit_transform(X_train)
 X_test_proc = scaler.transform(X_test)
 
-model = Ridge(alpha=1.0)
+model = Ridge(alpha=10.0)
+
 
 
 # ---------------- TRAIN ----------------
