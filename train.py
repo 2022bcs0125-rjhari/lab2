@@ -31,27 +31,20 @@ X_train, X_test, y_train, y_test = train_test_split(
 # 🔴 EXPERIMENT-SPECIFIC CODE HERE
 # ===============================
 
-from sklearn.tree import DecisionTreeRegressor
+import xgboost as xgb
 
-EXP_ID = "EXP-04"
-MODEL_NAME = "Decision Tree (depth=10 + FS)"
-
-corr = data.corr()["quality"].abs()
-selected = corr[corr > 0.15].index.drop("quality")
-
-X_fs = data[selected]
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X_fs, y, test_size=0.2, random_state=42
-)
+EXP_ID = "EXP-05"
+MODEL_NAME = "XGBoost baseline"
 
 X_train_proc = X_train
 X_test_proc = X_test
 
-model = DecisionTreeRegressor(max_depth=10, random_state=42)
-
-
-
+model = xgb.XGBRegressor(
+    n_estimators=100,
+    learning_rate=0.1,
+    max_depth=5,
+    random_state=42
+)
 
 
 # ---------------- TRAIN ----------------
