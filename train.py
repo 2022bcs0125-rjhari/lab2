@@ -31,25 +31,16 @@ X_train, X_test, y_train, y_test = train_test_split(
 # 🔴 EXPERIMENT-SPECIFIC CODE HERE
 # ===============================
 
-from sklearn.linear_model import Ridge
+from sklearn.tree import DecisionTreeRegressor
 
-EXP_ID = "EXP-02"
-MODEL_NAME = "Ridge Regression (alpha=10, corr-FS)"
+EXP_ID = "EXP-03"
+MODEL_NAME = "Decision Tree (depth=5)"
 
-corr = data.corr()["quality"].abs()
-selected = corr[corr > 0.15].index.drop("quality")
+X_train_proc = X_train
+X_test_proc = X_test
 
-X_fs = data[selected]
+model = DecisionTreeRegressor(max_depth=5, random_state=42)
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X_fs, y, test_size=0.2, random_state=42
-)
-
-scaler = StandardScaler()
-X_train_proc = scaler.fit_transform(X_train)
-X_test_proc = scaler.transform(X_test)
-
-model = Ridge(alpha=10.0)
 
 
 
