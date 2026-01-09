@@ -33,13 +33,23 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 from sklearn.tree import DecisionTreeRegressor
 
-EXP_ID = "EXP-03"
-MODEL_NAME = "Decision Tree (depth=5)"
+EXP_ID = "EXP-04"
+MODEL_NAME = "Decision Tree (depth=10 + FS)"
+
+corr = data.corr()["quality"].abs()
+selected = corr[corr > 0.15].index.drop("quality")
+
+X_fs = data[selected]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X_fs, y, test_size=0.2, random_state=42
+)
 
 X_train_proc = X_train
 X_test_proc = X_test
 
-model = DecisionTreeRegressor(max_depth=5, random_state=42)
+model = DecisionTreeRegressor(max_depth=10, random_state=42)
+
 
 
 
