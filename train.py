@@ -33,25 +33,20 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 import xgboost as xgb
 
-EXP_ID = "EXP-06"
-MODEL_NAME = "XGBoost tuned + FS"
-
-corr = data.corr()["quality"].abs()
-selected = corr[corr > 0.15].index.drop("quality")
-
-X_fs = data[selected]
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X_fs, y, test_size=0.2, random_state=42
-)
+EXP_ID = "EXP-07"
+MODEL_NAME = "XGBoost fully tuned"
 
 X_train_proc = X_train
 X_test_proc = X_test
 
 model = xgb.XGBRegressor(
-    n_estimators=200,
-    learning_rate=0.05,
+    n_estimators=600,
+    learning_rate=0.03,
     max_depth=6,
+    subsample=0.8,
+    colsample_bytree=0.8,
+    reg_alpha=0.1,
+    reg_lambda=1.0,
     random_state=42
 )
 
